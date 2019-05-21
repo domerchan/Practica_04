@@ -1,47 +1,41 @@
+<?php
+	session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<title></title>
 	</head>
 	<body>
-		<table>
-			<tr>
-				<th>Cedula</th> 
-				<th>Nombres</th>
-				<th>Apellidos</th>
-				<th>Dirección</th>
-				<th>Teléfono</th>
-				<th>Correo</th>
-				<th>Fecha Nacimiento</th>
-				<th>Eliminar</th>
-				<th>Modificar</th>
-				<th>Cambiar Contraseña</th>
-			</tr>
+		<?php
 
-			<?php
+		include '../../../../config/conexionBD.php';
 
-			include '../../../../config/conexionBD.php';
+		$sql = "SELECT * FROM correo WHERE cor_remitente = ".$_SESSION['codigo']. " ORDER BY cor_codigo DESC";
+		$result = $conn -> query($sql);
 
-			$sql = "SELECT * FROM usuario WHERE usu_eliminado = 'N'";
-				$result = $conn -> query($sql);
+		if ($result -> num_rows > 0) {
+			while ($row = $result -> fetch_assoc()) {
 
-				if ($result -> num_rows > 0) {
-					while ($row = $result -> fetch_assoc()) {
-							echo "<tr>";
-							echo "<td>".$row["usu_cedula"]."</td>";
-							echo "<td>".$row["usu_nombres"]."</td>";
-							echo "<td>".$row["usu_apellidos"]."</td>";
-							echo "<td>".$row["usu_direccion"]."</td>";
-							echo "<td>".$row["usu_telefono"]."</td>";
-							echo "<td>".$row["usu_correo"]."</td>";
-							echo "<td>".$row["usu_fecha_nacimiento"]."</td>";
-							echo "<td><a href='../controladores/eliminar.php?codigo=".$row["usu_codigo"]."'>Eliminar</a></td>";
-							echo "<td><a href='modificar_usuario.php?codigo=".$row["usu_codigo"]."'>Modificar</a></td>";
-							echo "<td><a href='contrasena.php?codigo=".$row["usu_codigo"]."'>Cambiar</a></td>";
-							echo "</tr>";
-					}
-				}
+				$sql2 = "SELECT CONCAT(usu_nombres, ' ', usu_apellidos) AS res FROM usuario WHERE usu_codigo = ".$row["cor_destinatario"];
+				$result2 = $conn -> query($sql2);
+				$row2 = $result2 -> fetch_assoc();
 
-			?>
+					echo "<div class='btn' onclick=\"openMessage('".$row["cor_mensaje"]."','".$row2["res"]."', '".$row["cor_fecha"]."')\">";
+					echo "<table class='informacion'>";
+					echo "<tr>";
+					echo "<th colspan='2'>".$row["cor_asunto"]."</th>";
+					echo "</tr>";
+					echo "<tr>";
+					echo "<td>".$row2['res']."</td>";
+					echo "<td>".$row["cor_fecha"]."</td>";
+					echo "</tr>";
+					echo "</table>";
+					echo "</div>";
+			}
+		}
+
+		?>
 	</body>
 </html>

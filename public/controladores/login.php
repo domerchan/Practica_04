@@ -11,8 +11,17 @@
 	$result = $conn -> query($sql);
 
 	if ($result -> num_rows > 0) {
+		$row = $result -> fetch_assoc();
 		$_SESSION['isLogged'] = TRUE;
-		header("Location: ../../admin/vista/usuario/vista/index.php");
+		if ($row['usu_rol'] == 'user') {
+			$_SESSION['rol'] = 'user';
+			$_SESSION['codigo'] = $row['usu_codigo'];
+			header("Location: ../../admin/vista/usuario/vista/index.php");
+		} else {
+			$_SESSION['rol'] = 'admin';
+			$_SESSION['codigo'] = $result -> fetch_assoc()['usu_codigo'];
+			header("Location: ../../admin/vista/admin/vista/index.php");
+		}
 	} else {
 		header("Location: ../vista/login.html");
 	}
