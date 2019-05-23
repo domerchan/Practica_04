@@ -109,7 +109,7 @@
 
 			<br>
 			<br>
-			
+
 			<div>
 				<?php
 					echo "<form method='POST' action='../controladores/cambiar_contrasena.php'>";
@@ -128,7 +128,7 @@
 					echo "<td><input type='password' name='rep'></td>";
 					echo "</tr>";
 					echo "<tr>";
-					echo "<td colspan='2'><input class='btn2' type='submit' value='Cambiar'></td>";
+					echo "<td colspan='2'><input id='change' type='submit' value='Cambiar Contraseña'></td>";
 					echo "</tr>";
 					echo "</table>";
 					echo "</form>";

@@ -71,7 +71,20 @@ ul {
   height: 50px;
 }
 
+.btn2 {
+  border-top: 1px solid white;
+  background-color: rgba(154, 187, 181, 0.2);
+  width: 40%;
+  padding: 5px;
+  margin: 5px;
+}
+
 .btn:hover {
+  background-color: rgba(154, 187, 181, 0.6) !important; 
+  cursor: pointer;
+}
+
+.btn2:hover {
   background-color: rgba(154, 187, 181, 0.6) !important; 
   cursor: pointer;
 }

@@ -84,6 +84,11 @@ ul {
   cursor: pointer;
 }
 
+.btn2:hover {
+  background-color: rgba(154, 187, 181, 0.6) !important; 
+  cursor: pointer;
+}
+
 #sec0 {
   width: 20%;
   height: 100%;
