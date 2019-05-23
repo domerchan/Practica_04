@@ -53,8 +53,8 @@
 		<nav id="sidebarMenu">
 			<ul class="sidebarMenuInner">
 				<li><a href="index.php">Buzón de Entrada</a></li>
-				<li><a href="nuevo.php">Mensaje Nuevo</a></li>
 				<li><a href="enviados.php">Mensajes Enviados</a></li>
+				<li><a href="nuevo.php">Mensaje Nuevo</a></li>
 			</ul>
 		</nav>
 
