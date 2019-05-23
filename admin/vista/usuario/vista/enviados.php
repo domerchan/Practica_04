@@ -23,16 +23,21 @@
 			<nav class="header">
 				<ul>
 					<li>
-						<a href="">Mi Cuenta</a>
+						
 						<?php
 							include '../../../../config/conexionBD.php';
 							$sql = "SELECT * FROM usuario WHERE usu_codigo = ".$_SESSION['codigo'];
 							$result = $conn -> query($sql);
-							while ($row = $result -> fetch_assoc()) 
+							while ($row = $result -> fetch_assoc()) {
+								echo "<a href=''>".$row['usu_nombres']." ".$row['usu_apellidos']."</a>";
 								echo "<img class='img' src='data:image/jpg;base64,".base64_encode($row["usu_imagen"])."'/>";
+							}
 						?>
+						<ul>
+							<li><a href="modificar_usuario.php">Mi Cuenta</a></li>
+							<li><a href="../controladores/cerrar_sesion.php">Cerrar Sesión</a></li>
+						</ul>
 					</li>
-					<li><a href="cerrar_sesion.php">Cerrar Sesión</a></li>
 				</ul>
 			</nav>
 		</header>

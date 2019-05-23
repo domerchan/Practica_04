@@ -18,10 +18,9 @@ function validar(){
         return false;
 
     } else {
-        var fecha = validarFecha();
         var cedula = validarCedula();
         var correo = validarCorreo();
-        if (fecha || cedula || correo) {
+        if (cedula || correo) {
             return false;
         } else {
             return true;
@@ -77,22 +76,6 @@ function dos_valores(string) {
     }
     
     return out;
-}
-
-function validarFecha() {
-    var array = document.getElementById('fec').value.split('/');
-    var fecha = new Date(array[2], array[1], array[0]);
-    if (array.length == 3 && fecha 
-        && array[0] == fecha.getDate() 
-        && array[1] == fecha.getMonth() 
-        && array[2] == fecha.getFullYear()) {
-        return false;
-    } else {
-        document.getElementById('fec').classList.add('error');
-        document.getElementById('f').classList.add('p');
-        alert('Fecha mal ingresada, usar formato dd/mm/yyyy');
-        return true; //Inválida
-    }
 }
 
 function validarCedula() {

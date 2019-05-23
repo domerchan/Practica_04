@@ -1,7 +1,8 @@
 <?php
 	session_start();
-	if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE)
-		header("Location: /ProgramacionHipermedial/Practica_04/public/vista/login.html");
+	if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE) {
+		header("Location: /SistemaDeGestion/public/vista/login.html");
+	}
 
 	if(!isset($_SESSION['rol']) || $_SESSION['rol'] == 'user')
 		header("Location: /ProgramacionHipermedial/Practica_04/admin/vista/admin/vista/index.php");
@@ -56,66 +57,58 @@
 			</ul>
 		</nav>
 
-		<section id="sec1">	
-
-			<h1>Correos</h1>
+		<section id="nuevo">
+			<h1>Usuarios</h1>
 
 			<form>
-				<input type="text" class="btn_noborder" id="remitente" name="remitente" value="" placeholder="Buscar por remitente" onkeyup="buscarPorRemitente()">
-			</form>
-			<br>
-			<form>
-				<input type="text" id="destinatario" class="btn_noborder" name="destinatario" value="" placeholder="Buscar por destinatario" onkeyup="buscarPorDestinatario()">
+				<input type="text" id="cedula" name="cedula" value="" onkeyup="buscarPorCedula()">
 			</form>
 			<br>
 
-			<div id="informacion">
+			<table id="informacion">
+				<tr>
+					<th>Cedula</th> 
+					<th>Nombres</th>
+					<th>Apellidos</th>
+					<th>Dirección</th>
+					<th>Teléfono</th>
+					<th>Correo</th>
+					<th>Nacimiento</th>
+					<th>Eliminar</th>
+					<th>Modificar</th>
+					<th>Contraseña</th>
+				</tr>
+
 				<?php
-					$sql = "SELECT * FROM correo ORDER BY cor_codigo DESC" ;
+					include '../../../../config/conexionBD.php';
+					$sql = "SELECT * FROM usuario WHERE usu_eliminado = 'N' AND usu_rol = 'user'";
 					$result = $conn -> query($sql);
 
 					if ($result -> num_rows > 0) {
 						while ($row = $result -> fetch_assoc()) {
-
-							$sql2 = "SELECT * FROM usuario WHERE usu_codigo = ".$row["cor_remitente"];
-							$result2 = $conn -> query($sql2);
-							$row2 = $result2 -> fetch_assoc();
-
-							$sql3 = "SELECT * FROM usuario WHERE usu_codigo = ".$row["cor_destinatario"];
-							$result3 = $conn -> query($sql3);
-							$row3 = $result3 -> fetch_assoc();
-
-							echo "<div class='btn' onclick=\"openMessage('".$row["cor_mensaje"]."','".$row2["usu_nombres"]." ".$row2['usu_apellidos']."','".$row2['usu_correo']."','".$row3["usu_nombres"]." ".$row3['usu_apellidos']."','".$row3['usu_correo']."', '".$row["cor_fecha"]."')\">";
-							echo "<table class='informacion'>";
-							echo "<tr>";
-							echo "<th colspan='2'>".$row["cor_asunto"]."</th>";
-							echo "</tr>";
-							echo "<tr>";
-							echo "<td>".$row2["usu_nombres"]." ".$row2['usu_apellidos']."</td>";
-							echo "<td>".$row["cor_fecha"]."</td>";
-							echo "</tr>";
-							echo "</table>";
-							echo "</div>";
-
+								echo "<tr>";
+								echo "<td>".$row["usu_cedula"]."</td>";
+								echo "<td>".$row["usu_nombres"]."</td>";
+								echo "<td>".$row["usu_apellidos"]."</td>";
+								echo "<td>".$row["usu_direccion"]."</td>";
+								echo "<td>".$row["usu_telefono"]."</td>";
+								echo "<td>".$row["usu_correo"]."</td>";
+								echo "<td>".$row["usu_fecha_nacimiento"]."</td>";
+								echo "<td><a href='../controladores/eliminar.php?codigo=".$row["usu_codigo"]."'>Eliminar</a></td>";
+								echo "<td><a href='modificar_usuario.php?codigo=".$row["usu_codigo"]."'>Modificar</a></td>";
+								echo "<td><a href='contrasena.php?codigo=".$row["usu_codigo"]."'>Cambiar</a></td>";
+								echo "</tr>";
 						}
 					} else {
-						echo "<table class='informacion'>";
 						echo "<tr>";
-						echo "<th colspan=4>No tiene correos</th>";
+						echo "<td colspan=7>No existen usuarios registrados en el sistema</td>";
 						echo "</tr>";
-						echo "</table>";
 					}
 
 					$conn -> close();
 				?>
-			</div>
-
+				<br>
+			</table>
 		</section>
-
-		<section id="sec2">
-			<div id="from"></div>
-			<div id="mensaje"></div>
-		</section>
-		
 	</body>
 </html>
